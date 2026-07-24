@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woodintole Property | AI-Assisted UK Property Sourcing &amp; Portfolio</title>
+<meta name="description" content="Woodintole Property combines UK property, company ownership and civic data with AI-assisted analysis to find, assess and deliver acquisitions — with a track record of properties let to social housing providers.">
+<link rel="canonical" href="https://www.woodintole.co.uk/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Woodintole Property | Property Intelligence Built for Better Acquisitions">
+<meta property="og:description" content="AI-assisted UK property sourcing built on ownership research, data engineering and human verification. See our completed acquisitions let to social housing providers.">
+<meta property="og:image" content="https://www.woodintole.co.uk/images/og-default.svg">
+<meta property="og:url" content="https://www.woodintole.co.uk/">
+<meta property="og:site_name" content="Woodintole Property">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F8FA;
+    --surface:#FFFFFF;
+    --ink:#12202E;
+    --muted:#58697A;
+    --line:#D7E1E8;
+    --signal:#2F5BFF;
+    --signal-ink:#FFFFFF;
+    --mint:#2FD1A6;
+    --house-line:#29415A;
+    --house-line-soft:rgba(41,65,90,0.22);
+    --grid-line:rgba(41,65,90,0.07);
+    --wireframe-scale:clamp(2.775, calc(1.5 + 0.18vw), 5.025);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  .field{
+    position:relative;
+    min-height:0;
+    overflow:hidden;
+    background:var(--bg);
+  }
+
+  .grid-floor{
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
+    background-size:56px 56px;
+    opacity:.82;
+    pointer-events:none;
+  }
+
+  nav{
+    position:relative;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    max-width:1280px;
+    margin:0 auto;
+    padding:28px 40px 0;
+  }
+  .wordmark{
+    color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:-0.01em;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    text-decoration:none;
+  }
+  .wordmark > span:last-child{
+    display:flex;
+    flex-direction:column;
+  }
+  .wordmark small{
+    margin-top:2px;
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    font-size:9px;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .wordmark .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 0 4px rgba(47,91,255,0.14);
+  }
+  .navlinks{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    font-size:14px;
+    color:var(--muted);
+  }
+  .navlinks a{ color:inherit; text-decoration:none; }
+  .navlinks a:hover,
+  .navlinks a[aria-current="page"]{ color:var(--ink); }
+  .navlinks .cta-ghost{
+    border:1px solid var(--line);
+    padding:10px 15px;
+    border-radius:8px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.76);
+    box-shadow:inset 3px 0 0 var(--signal);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+  }
+  .navlinks .cta-ghost:hover{
+    border-color:rgba(47,91,255,.48);
+    box-shadow:inset 3px 0 0 var(--signal),0 7px 20px rgba(47,91,255,.11);
+    transform:translateY(-1px);
+  }
+
+  .hero{
+    position:relative;
+    z-index:2;
+    max-width:1280px;
+    min-height:0;
+    margin:0 auto;
+    padding:96px 40px 48px;
+    display:flex;
+    align-items:center;
+  }
+  .copy{
+    position:relative;
+    z-index:3;
+    width:min(620px,100%);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--signal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 26px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--signal);
+    display:inline-block;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:clamp(38px,4.6vw,60px);
+    line-height:1.06;
+    letter-spacing:-0.02em;
+    margin:0 0 14px;
+    max-width:11.5ch;
+  }
+  h2{
+    color:var(--muted);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(27px,3.2vw,44px);
+    font-weight:500;
+    line-height:1.08;
+    letter-spacing:-0.02em;
+    margin:0 0 26px;
+  }
+  p.lede{
+    font-size:17px;
+    line-height:1.65;
+    color:var(--muted);
+    max-width:46ch;
+    margin:0 0 42px;
+  }
+  .actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    min-height:46px;
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    font-size:12px;
+    line-height:1;
+    color:var(--signal-ink);
+    background:var(--ink);
+    border:1px solid var(--ink);
+    padding:14px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    letter-spacing:.045em;
+    text-transform:uppercase;
+    box-shadow:4px 4px 0 rgba(47,91,255,.18);
+    transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease;
+    text-decoration:none;
+  }
+  .btn-primary::after{
+    content:"↗";
+    color:var(--mint);
+    font-size:15px;
+    line-height:1;
+  }
+  .btn-primary:hover{
+    background:var(--signal);
+    border-color:var(--signal);
+    box-shadow:4px 4px 0 rgba(47,209,166,.34);
+    transform:translate(-1px,-1px);
+  }
+  .btn-primary:active{
+    box-shadow:1px 1px 0 rgba(47,209,166,.34);
+    transform:translate(2px,2px);
+  }
+  .btn-secondary{
+    position:relative;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.035em;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:rgba(255,255,255,.72);
+    border:1px solid var(--line);
+    border-radius:8px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    min-height:46px;
+    padding:12px 15px;
+    box-shadow:inset 3px 0 0 var(--signal);
+    text-decoration:none;
+    transition:color .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease;
+  }
+  .btn-secondary:hover{
+    color:var(--signal);
+    background:var(--surface);
+    border-color:rgba(47,91,255,.42);
+    box-shadow:inset 3px 0 0 var(--mint),0 7px 20px rgba(47,91,255,.09);
+    transform:translateY(-1px);
+  }
+  .btn-secondary svg{ transition:transform .15s ease; }
+  .btn-secondary:hover svg{ transform:translateX(3px); }
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible,
+  .navlinks .cta-ghost:focus-visible,
+  .menu-toggle:focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+  }
+
+  /* Full-hero wireframe: sized from the viewport and layered behind the copy. */
+  .stage{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    perspective:clamp(1200px,130vw,2200px);
+  }
+  .rig{
+    position:absolute;
+    inset:0;
+    transform-style:preserve-3d;
+    transform:rotateX(-16deg);
+  }
+  .house-anchor{
+    position:absolute;
+    top:47%;
+    left:60%;
+    width:0;
+    height:0;
+    transform:scale(var(--wireframe-scale));
+    transform-style:preserve-3d;
+  }
+  .house{
+    position:absolute;
+    inset:0;
+    width:0;
+    height:0;
+    transform-style:preserve-3d;
+    animation:spin 26s linear infinite;
+  }
+  @keyframes spin{
+    from{ transform:rotateY(0deg); }
+    to{ transform:rotateY(360deg); }
+  }
+  .face{
+    position:absolute;
+    top:0;
+    left:0;
+    border:1.15px solid var(--house-line-soft);
+    background:rgba(41,65,90,0.018);
+  }
+  .face.crisp{ border-color:rgba(41,65,90,0.5); }
+  .wall{ width:220px; height:150px; margin:-75px 0 0 -110px; }
+  .wall.front{ transform:translateZ(110px); }
+  .wall.back{ transform:rotateY(180deg) translateZ(110px); }
+  .wall.left{ transform:rotateY(-90deg) translateZ(110px); }
+  .wall.right{ transform:rotateY(90deg) translateZ(110px); }
+  .door{
+    width:54px;
+    height:88px;
+    margin:-1px 0 0 -27px;
+    top:75px;
+    left:0;
+    transform:translateZ(111px);
+    background:none;
+  }
+  .window{
+    width:42px;
+    height:42px;
+    top:-38px;
+    background:none;
+  }
+  .window.w1{ margin-left:-95px; transform:translateZ(111px); }
+  .window.w2{ margin-left:53px; transform:translateZ(111px); }
+  .roof-front{
+    width:220px;
+    height:156px;
+    margin:-78px 0 0 -110px;
+    transform:translateY(-75px) rotateX(45deg) translateY(-77.8px) translateZ(77.8px);
+  }
+  .roof-back{
+    width:220px;
+    height:156px;
+    margin:-78px 0 0 -110px;
+    transform:translateY(-75px) rotateX(-45deg) translateY(-77.8px) translateZ(-77.8px);
+  }
+  .gable{ width:220px; height:80px; margin:-114px 0 0 -110px; }
+  .gable.left{ transform:rotateY(-90deg) translateZ(110px); }
+  .gable.right{ transform:rotateY(90deg) translateZ(110px); }
+  .gable svg{ width:100%; height:100%; display:block; }
+  .ground-ring{
+    position:absolute;
+    width:clamp(620px,65vw,1080px);
+    aspect-ratio:1;
+    border-radius:50%;
+    border:1px solid rgba(41,65,90,0.085);
+    top:49%;
+    left:60%;
+    transform:translate(-50%,-50%) rotateX(78deg);
+  }
+  .ground-ring.r2{
+    width:clamp(760px,80vw,1320px);
+    border-color:rgba(41,65,90,0.05);
+  }
+  .glow{
+    position:absolute;
+    width:clamp(620px,66vw,1100px);
+    aspect-ratio:1;
+    top:47%;
+    left:60%;
+    transform:translate(-50%,-56%);
+    background:none;
+    filter:none;
+  }
+
+  .basefooter{
+    position:relative;
+    z-index:4;
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 40px 48px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+  .basefooter .tags{ display:flex; gap:28px; }
+
+  @media (max-width:880px){
+    :root{ --wireframe-scale:clamp(2.325,calc(2.025 + 0.15vw),2.775); }
+    nav{ padding-inline:24px; }
+    .hero{
+      min-height:0;
+      padding:56px 24px 48px;
+      align-items:flex-start;
+    }
+    .copy{ width:100%; }
+    .navlinks a:not(.cta-ghost){ display:none; }
+    .house-anchor,
+    .ground-ring,
+    .glow{ left:50%; }
+    .house-anchor,
+    .glow{ top:43%; }
+    .ground-ring{ top:45%; }
+    .stage{ opacity:0.62; }
+    .basefooter{
+      padding-inline:24px;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:10px;
+    }
+  }
+  @media (max-width:520px){
+    .house-anchor,
+    .glow{ top:40%; }
+    .ground-ring{ top:42%; }
+    .basefooter .tags{ flex-direction:column; gap:8px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .house{ animation:none; transform:rotateY(-28deg); }
+  }
+
+  .skip-link{
+    position:fixed;
+    top:12px;
+    left:12px;
+    z-index:100;
+    padding:10px 14px;
+    border-radius:8px;
+    color:var(--signal-ink);
+    background:var(--ink);
+    font-size:13px;
+    transform:translateY(-160%);
+    transition:transform .18s ease;
+  }
+  .skip-link:focus{ transform:translateY(0); }
+
+  .menu-toggle{
+    display:none;
+    width:40px;
+    height:40px;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    border:1px solid var(--line);
+    border-radius:10px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.86);
+    box-shadow:inset 3px 0 0 var(--signal);
+    cursor:pointer;
+  }
+  .menu-toggle svg{ width:20px; height:20px; }
+
+  .page-content{
+    position:relative;
+    background:
+      linear-gradient(var(--grid-line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid-line) 1px,transparent 1px),
+      var(--bg);
+    background-size:56px 56px;
+  }
+  .content-section{
+    position:relative;
+    padding:64px 40px;
+  }
+  .page-content > .content-section:first-child{ padding-top:0; }
+  .page-content > .content-section + .content-section:not(.trust-section){
+    border-top:1px solid rgba(41,65,90,.08);
+  }
+  .section-inner{
+    width:min(1200px,100%);
+    margin:0 auto;
+  }
+  .section-heading{
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+    gap:56px;
+    align-items:end;
+    margin-bottom:48px;
+  }
+  .section-heading .eyebrow{ margin-bottom:18px; }
+  .section-heading h2,
+  .trust-grid h2,
+  .contact-panel h2,
+  .scan-intro h2{
+    max-width:15ch;
+    margin:0;
+    color:var(--ink);
+    font-size:clamp(32px,4vw,52px);
+    font-weight:600;
+  }
+  .section-heading .lede,
+  .trust-grid .lede,
+  .contact-panel .lede,
+  .scan-intro .lede{
+    max-width:52ch;
+    margin:0;
+    color:var(--muted);
+  }
+
+  .portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:20px;
+  }
+  .property-card{
+    min-width:0;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:18px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.86);
+    box-shadow:0 14px 40px rgba(18,32,46,0.055);
+    text-decoration:none;
+    transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+  }
+  .property-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(47,91,255,.36);
+    box-shadow:0 20px 52px rgba(18,32,46,0.10);
+  }
+  .property-card figure{
+    position:relative;
+    aspect-ratio:9/6;
+    margin:0;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+    background:#EAF0F4;
+  }
+  .property-card img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    transition:transform .4s ease;
+  }
+  .property-card:hover img{ transform:scale(1.025); }
+  .property-body{ padding:24px; }
+  .property-type{
+    margin:0 0 9px;
+    color:var(--signal);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .property-card h3{
+    margin:0;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:22px;
+    font-weight:600;
+  }
+  .property-stats{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+    margin-top:28px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+  }
+  .property-stats strong,
+  .property-stats span{ display:block; }
+  .property-stats strong{
+    color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:17px;
+  }
+  .property-stats span{
+    margin-top:4px;
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.4;
+  }
+  .section-action{ margin-top:32px; }
+
+  .metrics{
+    padding:0 40px 64px;
+  }
+  .metrics-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:rgba(255,255,255,.76);
+  }
+  .metric{
+    min-width:0;
+    padding:30px;
+    border-right:1px solid var(--line);
+  }
+  .metric:last-child{ border-right:0; }
+  .metric strong{
+    display:block;
+    color:var(--signal);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(27px,3vw,40px);
+    font-weight:600;
+  }
+  .metric span{
+    display:block;
+    margin-top:8px;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+  }
+
+  .trust-section{
+    color:var(--signal-ink);
+    background:var(--ink);
+  }
+  .trust-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:80px;
+    align-items:center;
+  }
+  .trust-grid .eyebrow{ color:#8BA4FF; }
+  .trust-grid .eyebrow::before{ background:#8BA4FF; }
+  .trust-grid h2{ color:var(--signal-ink); }
+  .trust-grid .lede{ color:#C8D4DE; }
+  .quote{
+    margin:0;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(28px,3vw,42px);
+    line-height:1.22;
+    letter-spacing:-.02em;
+  }
+  .quote-credit{
+    margin:24px 0 0;
+    color:#9FB0BF;
+    font-size:13px;
+    line-height:1.6;
+  }
+  .tag-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:28px 0 32px;
+  }
+  .tag{
+    padding:8px 12px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;
+    color:#DCE5EC;
+    background:rgba(255,255,255,.045);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+  }
+  .trust-section .btn-secondary{
+    color:var(--signal-ink);
+    border-color:rgba(255,255,255,.28);
+    background:rgba(255,255,255,.05);
+    box-shadow:inset 3px 0 0 var(--mint);
+  }
+  .trust-section .btn-secondary:hover{
+    color:var(--signal-ink);
+    border-color:rgba(255,255,255,.62);
+    background:rgba(255,255,255,.10);
+  }
+
+  .contact-panel{
+    display:grid;
+    grid-template-columns:minmax(0,1.2fr) minmax(270px,.8fr);
+    gap:48px;
+    align-items:center;
+    padding:48px;
+    border:1px solid var(--line);
+    border-radius:22px;
+    background:rgba(255,255,255,.84);
+    box-shadow:0 18px 55px rgba(18,32,46,.06);
+  }
+  .contact-panel .eyebrow{ margin-bottom:18px; }
+  .contact-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+
+  .scan-section{
+    padding:64px 40px;
+  }
+  .scan-intro{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);
+    gap:48px;
+    align-items:end;
+    margin-bottom:42px;
+  }
+  .scan-intro .eyebrow{ margin-bottom:18px; }
+  .intelligence-console{
+    overflow:hidden;
+    border:1px solid #263B4F;
+    border-radius:20px;
+    color:var(--signal-ink);
+    background:#101D29;
+    box-shadow:0 26px 70px rgba(18,32,46,.19);
+  }
+  .console-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    padding:14px 18px;
+    border-bottom:1px solid #263B4F;
+    color:#A8BAC9;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.04em;
+  }
+  .console-dots{ display:flex; gap:6px; }
+  .console-dots i{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#496074;
+  }
+  .console-dots i:first-child{ background:var(--mint); }
+  .console-grid{
+    display:grid;
+    grid-template-columns:minmax(320px,.8fr) minmax(0,1.2fr);
+  }
+  .scan-visual{
+    min-height:340px;
+    border-right:1px solid #263B4F;
+    background:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:28px 28px;
+  }
+  .scan-visual svg{ width:100%; height:100%; display:block; }
+  .scan-line{ animation:scan 4.8s ease-in-out infinite; }
+  @keyframes scan{
+    0%,100%{ transform:translateY(0); opacity:.28; }
+    50%{ transform:translateY(235px); opacity:1; }
+  }
+  .readout{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-content:center;
+    padding:26px;
+  }
+  .readout-item{
+    min-width:0;
+    padding:20px;
+    border-bottom:1px solid #263B4F;
+  }
+  .readout-item:nth-last-child(-n+2){ border-bottom:0; }
+  .readout-item span,
+  .readout-item strong{ display:block; }
+  .readout-item span{
+    margin-bottom:8px;
+    color:#8FA3B4;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+  }
+  .readout-item strong{
+    overflow-wrap:anywhere;
+    color:#F2F6F9;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;
+    font-weight:500;
+  }
+  .readout-item strong.signal{ color:#86A0FF; }
+  .readout-item strong.mint{ color:var(--mint); }
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    border-top:1px solid #263B4F;
+  }
+  .process-stage{
+    min-width:0;
+    min-height:250px;
+    padding:24px 18px;
+    border-right:1px solid #263B4F;
+  }
+  .process-stage:last-child{ border-right:0; }
+  .stage-index{
+    margin:0 0 40px;
+    color:var(--mint);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+  }
+  .process-stage h3{
+    min-height:2.4em;
+    margin:0 0 12px;
+    color:#F2F6F9;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:16px;
+    font-weight:600;
+    line-height:1.2;
+  }
+  .process-stage p:last-child{
+    margin:0;
+    color:#9EB0BE;
+    font-size:12px;
+    line-height:1.55;
+  }
+
+  .site-footer{
+    padding:72px 40px 32px;
+    color:#B8C7D2;
+    background:#0C1721;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:2fr repeat(3,1fr);
+    gap:56px;
+    padding-bottom:46px;
+  }
+  .footer-brand{ color:#FFFFFF; }
+  .footer-brand small{ color:#9FB0BF; }
+  .footer-copy{
+    max-width:35ch;
+    margin:18px 0 0;
+    font-size:13px;
+    line-height:1.65;
+  }
+  .site-footer h3{
+    margin:0 0 18px;
+    color:#FFFFFF;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .site-footer ul{ margin:0; padding:0; list-style:none; }
+  .site-footer li+li{ margin-top:11px; }
+  .site-footer a{ color:#B8C7D2; text-decoration:none; }
+  .site-footer a:hover{ color:#FFFFFF; }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    padding:24px 0;
+    border-top:1px solid rgba(255,255,255,.10);
+    border-bottom:1px solid rgba(255,255,255,.10);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .footer-disclaimer{
+    max-width:1050px;
+    margin:22px 0 0;
+    color:#8193A2;
+    font-size:10.5px;
+    line-height:1.65;
+  }
+
+  [data-reveal]{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s ease,transform .6s ease;
+  }
+  [data-reveal].is-visible{ opacity:1; transform:none; }
+
+  @media (max-width:1080px){
+    .portfolio-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .property-card:last-child{ grid-column:1/-1; }
+    .metrics-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .metric:nth-child(2){ border-right:0; }
+    .metric:nth-child(-n+2){ border-bottom:1px solid var(--line); }
+    .console-grid{ grid-template-columns:1fr 1fr; }
+    .process-grid{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .process-stage{ border-bottom:1px solid #263B4F; }
+    .process-stage:nth-child(4){ border-right:0; }
+    .process-stage:nth-last-child(-n+3){ border-bottom:0; }
+    .footer-grid{ grid-template-columns:1.6fr repeat(3,1fr); gap:32px; }
+  }
+
+  @media (max-width:880px){
+    .menu-toggle{ display:inline-flex; position:relative; z-index:7; }
+    .navlinks{
+      display:none;
+      position:absolute;
+      top:80px;
+      right:24px;
+      left:24px;
+      z-index:6;
+      align-items:stretch;
+      gap:4px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.96);
+      box-shadow:0 20px 50px rgba(18,32,46,.15);
+    }
+    .navlinks.is-open{ display:flex; }
+    .navlinks.is-open a:not(.cta-ghost){ display:block; }
+    .navlinks a{
+      padding:11px 12px;
+      border-radius:8px;
+    }
+    .navlinks .cta-ghost{ margin-top:4px; }
+    .content-section{ padding:64px 24px; }
+    .metrics{ padding:0 24px 64px; }
+    .scan-section{ padding:64px 24px; }
+    .section-heading,
+    .scan-intro,
+    .contact-panel{ grid-template-columns:1fr; gap:28px; }
+    .section-heading{ align-items:start; }
+    .portfolio-grid{ grid-template-columns:1fr; }
+    .property-card:last-child{ grid-column:auto; }
+    .trust-grid{ grid-template-columns:1fr; gap:52px; }
+    .contact-actions{ justify-content:flex-start; }
+    .console-grid{ grid-template-columns:1fr; }
+    .scan-visual{ min-height:300px; border-right:0; border-bottom:1px solid #263B4F; }
+    .process-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .process-stage:nth-child(2n){ border-right:0; }
+    .process-stage:nth-last-child(-n+3){ border-bottom:1px solid #263B4F; }
+    .process-stage:last-child{ border-bottom:0; }
+    .footer-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  }
+
+  @media (max-width:560px){
+    .wordmark{ font-size:17px; }
+    .wordmark small{ font-size:8px; }
+    .content-section{ padding:56px 18px; }
+    .metrics{ padding:0 18px 56px; }
+    .scan-section{ padding:56px 18px; }
+    .section-heading{ margin-bottom:32px; }
+    .section-heading h2,
+    .trust-grid h2,
+    .contact-panel h2,
+    .scan-intro h2{ font-size:32px; }
+    .metrics-grid{ grid-template-columns:1fr; }
+    .metric{
+      border-right:0;
+      border-bottom:1px solid var(--line);
+    }
+    .metric:nth-child(2){ border-bottom:1px solid var(--line); }
+    .metric:last-child{ border-bottom:0; }
+    .contact-panel{ padding:30px 24px; }
+    .readout{ grid-template-columns:1fr; padding:12px 20px; }
+    .readout-item{ padding:17px 0; }
+    .readout-item:nth-last-child(2){ border-bottom:1px solid #263B4F; }
+    .process-grid{ grid-template-columns:1fr; }
+    .process-stage{
+      min-height:0;
+      border-right:0;
+      border-bottom:1px solid #263B4F;
+    }
+    .process-stage:nth-last-child(-n+3){ border-bottom:1px solid #263B4F; }
+    .process-stage:last-child{ border-bottom:0; }
+    .stage-index{ margin-bottom:20px; }
+    .process-stage h3{ min-height:0; }
+    .site-footer{ padding-inline:18px; }
+    .footer-grid{ grid-template-columns:1fr; gap:34px; }
+    .footer-bottom{ flex-direction:column; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .scan-line{ animation:none; }
+    [data-reveal]{ opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="field">
+  <div class="grid-floor"></div>
+
+  <nav>
+    <a href="index.html" class="wordmark">
+      <span class="dot"></span>
+      <span>Woodintole Property<small>UK Property Intelligence</small></span>
+    </a>
+    <div class="navlinks" id="primary-navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About &amp; Methodology</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="cta-ghost">Investor enquiry</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-navigation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </nav>
+
+  <main class="hero" id="main">
+    <div class="stage" aria-hidden="true">
+      <div class="glow"></div>
+      <div class="ground-ring r2"></div>
+      <div class="ground-ring"></div>
+      <div class="rig">
+        <div class="house-anchor">
+          <div class="house">
+            <div class="face wall front"></div>
+            <div class="face wall back"></div>
+            <div class="face wall left"></div>
+            <div class="face wall right"></div>
+            <div class="face door"></div>
+            <div class="face window w1"></div>
+            <div class="face window w2"></div>
+            <div class="face roof-front crisp"></div>
+            <div class="face roof-back crisp"></div>
+            <div class="gable left">
+              <svg viewBox="0 0 220 80"><polygon points="110,0 0,80 220,80" fill="none" stroke="#29415A" stroke-width="1.2" stroke-opacity="0.28"/></svg>
+            </div>
+            <div class="gable right">
+              <svg viewBox="0 0 220 80"><polygon points="110,0 0,80 220,80" fill="none" stroke="#29415A" stroke-width="1.2" stroke-opacity="0.28"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy">
+      <p class="eyebrow">AI-assisted UK property sourcing</p>
+      <h1>Acquisition Intelligence</h1>
+      <h2>The Woodintole way</h2>
+      <p class="lede">5 million+ property records enriched with data from Companies House, Land Registry, EPC, ONS, HPI and more. Find off-market properties for sale then sort and score with AI-assisted analysis - to deliver acquisitions worth acting on.</p>
+      <div class="actions">
+        <a href="contact.html" class="btn-primary">Discuss an investment</a>
+        <a href="sourcing.html" class="btn-secondary">How sourcing works
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  
+</div>
+
+<div class="page-content">
+  <section class="content-section" aria-labelledby="track-record-title">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 — Track record</p>
+          <h2 id="track-record-title">Sourced, refurbished and let to social housing providers.</h2>
+        </div>
+        <p class="lede">Our growing portfolio of high-yield, high ROI, income-producing assets. Let to government-partnered social housing providers on 5-year FRR leases.</p>
+      </div>
+
+      <div class="portfolio-grid">
+        <a class="property-card" href="properties/property-one.html" data-reveal>
+          <figure>
+            <img src="images/birchwood-court-thumb.svg" alt="Exterior of a property sourced for social housing" width="900" height="700" loading="lazy">
+          </figure>
+          <div class="property-body">
+            <p class="property-type">2-bed flat · N.East Scotland</p>
+            <h3>Southesk Street, Brechin</h3>
+            <div class="property-stats">
+              <div><strong>13.29%</strong><span>Net yield</span></div>
+              <div><strong>£735.96/mo</strong><span>Social rent</span></div>
+            </div>
+          </div>
+        </a>
+
+        <a class="property-card" href="properties/property-two.html" data-reveal>
+          <figure>
+            <img src="images/the-sidings-thumb.svg" alt="Exterior of a sourced property in north-east Scotland" width="900" height="700" loading="lazy">
+          </figure>
+          <div class="property-body">
+            <p class="property-type">2-bed flat · N.East Scotland</p>
+            <h3>Baltic St, Montrose</h3>
+            <div class="property-stats">
+              <div><strong>14.80%</strong><span>Net yield</span></div>
+              <div><strong>23.17%</strong><span>ROI on refinance</span></div>
+            </div>
+          </div>
+        </a>
+
+        <a class="property-card" href="properties/property-three.html" data-reveal>
+          <figure>
+            <img src="images/mercer-view-thumb.svg" alt="Exterior placeholder for the next property in sourcing" width="900" height="700" loading="lazy">
+          </figure>
+          <div class="property-body">
+            <p class="property-type">Some property, some place</p>
+            <h3>Next property in sourcing</h3>
+            <div class="property-stats">
+              <div><strong>+20%</strong><span>ROI on refinance</span></div>
+              <div><strong>5 year no voids</strong><span>Minimum term</span></div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="section-action">
+        <a href="portfolio.html" class="btn-secondary">Deal breakdown
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section metrics" aria-label="Property sourcing track record">
+    <div class="section-inner">
+      <div class="metrics-grid" data-reveal>
+        <div class="metric"><strong>45+</strong><span>Properties sourced since inception</span></div>
+        <div class="metric"><strong>7.8%</strong><span>Average gross yield across portfolio</span></div>
+        <div class="metric"><strong>100%</strong><span>Portfolio let to social housing providers</span></div>
+        <div class="metric"><strong>12 wks</strong><span>Typical identification-to-offer window</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section scan-section" aria-labelledby="scan-title">
+    <div class="section-inner">
+      <div class="scan-intro">
+        <div>
+          <p class="eyebrow">Property Intelligence Scan</p>
+          <h2 id="scan-title">A seven-stage process from data to decision.</h2>
+        </div>
+        <p class="lede">Each stage narrows a wide dataset down to a small number of acquisitions worth serious attention.</p>
+      </div>
+
+      <div class="intelligence-console" data-reveal>
+        <div class="console-head">
+          <span class="console-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>property-intelligence.scan</span>
+        </div>
+
+        <div class="console-grid">
+          <div class="scan-visual">
+            <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrative property intelligence scan combining ownership, condition and area data">
+              <defs>
+                <pattern id="gridPatternBottom" width="26" height="26" patternUnits="userSpaceOnUse">
+                  <path d="M26 0H0V26" fill="none" stroke="rgba(47,209,166,0.08)" stroke-width="1"/>
+                </pattern>
+              </defs>
+              <rect width="520" height="300" fill="url(#gridPatternBottom)"/>
+              <g stroke="#2FD1A6" stroke-width="1.3" fill="none" opacity="0.82">
+                <rect x="150" y="70" width="90" height="150"/>
+                <rect x="250" y="40" width="70" height="180"/>
+                <rect x="330" y="95" width="60" height="125"/>
+                <line x1="150" y1="100" x2="240" y2="100"/>
+                <line x1="150" y1="130" x2="240" y2="130"/>
+                <line x1="150" y1="160" x2="240" y2="160"/>
+                <line x1="150" y1="190" x2="240" y2="190"/>
+              </g>
+              <g fill="#2FD1A6">
+                <circle cx="195" cy="70" r="3"/>
+                <circle cx="285" cy="40" r="3"/>
+                <circle cx="360" cy="95" r="3"/>
+              </g>
+              <g font-family="monospace" font-size="9" fill="#9EB0BE">
+                <text x="205" y="66">51.4545°N</text>
+                <text x="295" y="36">0.1130°W</text>
+              </g>
+              <rect class="scan-line" x="120" y="20" width="300" height="2" fill="#2FD1A6" opacity="0.9"/>
+              <g stroke="#86A0FF" stroke-width="1" opacity="0.8">
+                <path d="M60 40 h20 M60 40 v20" fill="none"/>
+                <path d="M460 260 h-20 M460 260 v-20" fill="none"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="readout" aria-label="Illustrative opportunity record">
+            <div class="readout-item"><span>Ownership</span><strong>ACME Ltd</strong></div>
+            <div class="readout-item"><span>Requirements</span><strong class="signal">10k refurb</strong></div>
+            <div class="readout-item"><span>Asking</span><strong>57.5K</strong></div>
+            <div class="readout-item"><span>ROI</span><strong class="mint">28.6%</strong></div>
+            <div class="readout-item"><span>Net yield</span><strong class="mint">5.39%</strong></div>
+            <div class="readout-item"><span>Exit</span><strong class="signal">Social Let</strong></div>
+          </div>
+        </div>
+
+        <div class="process-grid" aria-label="Seven-stage property intelligence process">
+          <article class="process-stage">
+            <p class="stage-index">01 / 07</p>
+            <h3>Requirements</h3>
+            <p>What are you looking for and where. The first filter is you.</p>
+          </article>
+          <article class="process-stage">
+            <p class="stage-index">02 / 07</p>
+            <h3>Instant discovery</h3>
+            <p>Multiple candidate properties are surfaced against a range of overlapping attributes.</p>
+          </article>
+          <article class="process-stage">
+            <p class="stage-index">03 / 07</p>
+            <h3>Analyse / refine</h3>
+            <p>Condition, risk and investment indicators combine to assess interest and progress.</p>
+          </article>
+          <article class="process-stage">
+            <p class="stage-index">04 / 07</p>
+            <h3>Outreach</h3>
+            <p>A single button press means instant, bulk creation of communications and CRM entry. Every letter is bespoke to its own deal.</p>
+          </article>
+          <article class="process-stage">
+            <p class="stage-index">05 / 07</p>
+            <h3>Response / escalation</h3>
+            <p>Reply data is further scored via an automated valuation pipeline before negotiation begins.</p>
+          </article>
+          <article class="process-stage">
+            <p class="stage-index">06 / 07</p>
+            <h3>Negotiate</h3>
+            <p>Discussions anchored in proven data facilitate realistic, beneficial outcomes for both parties.</p>
+          </article>
+          <article class="process-stage">
+            <p class="stage-index">07 / 07</p>
+            <h3>Introduce or acquire</h3>
+            <p>Verified opportunities are introduced to investors or progressed to acquisition.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" aria-labelledby="contact-title">
+    <div class="section-inner contact-panel" data-reveal>
+      <div>
+        <p class="eyebrow">Get in touch</p>
+        <h2 id="contact-title">Ready to look at your next acquisition differently?</h2>
+        <p class="lede" style="margin-top:20px;">Whether you are an investor, a social housing provider or considering a sale, we would like to hear from you.</p>
+      </div>
+      <div class="contact-actions">
+        <a href="contact.html" class="btn-primary">Discuss an investment</a>
+        <a href="contact.html" class="btn-secondary">Enquire about sourcing
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section trust-section" aria-labelledby="approach-title">
+    <div class="section-inner trust-grid">
+      <div data-reveal>
+        <p class="eyebrow">Why investors work with us</p>
+        <blockquote class="quote">Property experience and data engineering checked against each other, not one replacing the other.</blockquote>
+        <p class="quote-credit"><strong>Our approach to due diligence</strong><br>Acquisitions team, Woodintole Property</p>
+      </div>
+      <div data-reveal>
+        <h2 id="approach-title">Better information leads to better acquisitions.</h2>
+        <p class="lede" style="margin-top:24px;">We are a UK property business built around a straightforward principle: better information leads to better acquisitions. Artificial intelligence and data engineering do the heavy lifting of research; people make the commercial decisions.</p>
+        <div class="tag-list">
+          <span class="tag">UK property intelligence</span>
+          <span class="tag">Companies House research</span>
+          <span class="tag">Social housing partnerships</span>
+          <span class="tag">Human-verified acquisitions</span>
+        </div>
+        <a href="about.html" class="btn-secondary">About our methodology
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M0 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="site-footer">
+  <div class="section-inner">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="wordmark footer-brand">
+          <span class="dot"></span>
+          <span>Woodintole Property<small>UK Property Intelligence</small></span>
+        </a>
+        <p class="footer-copy">AI-assisted UK property sourcing and a track record of completed acquisitions let to social housing providers.</p>
+      </div>
+      <div>
+        <h3>Site</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About &amp; Methodology</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Portfolio</h3>
+        <ul>
+          <li><a href="properties/property-one.html">Birchwood Court</a></li>
+          <li><a href="properties/property-two.html">The Sidings</a></li>
+          <li><a href="properties/property-three.html">Mercer View</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="contact.html">Investor enquiries</a></li>
+          <li><a href="contact.html">Sourcing enquiries</a></li>
+          <li><a href="contact.html">Social housing partners</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Woodintole Property Ltd. Registered in England and Wales.</span>
+      <span>woodintole.co.uk</span>
+    </div>
+    <p class="footer-disclaimer">Figures shown for illustrative properties are for illustration only and do not constitute a formal valuation or financial promise. Historic sourcing and letting outcomes do not guarantee future performance. Property investment involves risk, including to capital, and all property and financial information should be independently verified before any decision is made.</p>
+  </div>
+</footer>
+
+<script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.navlinks');
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('is-open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  });
+
+  navLinks?.addEventListener('click', event => {
+    if (event.target.closest('a')) {
+      navLinks.classList.remove('is-open');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+      menuToggle?.setAttribute('aria-label', 'Open menu');
+    }
+  });
+
+  const revealItems = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealItems.forEach(item => revealObserver.observe(item));
+  } else {
+    revealItems.forEach(item => item.classList.add('is-visible'));
+  }
+</script>
+</body>
+</html>

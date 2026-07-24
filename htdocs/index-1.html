@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Halcyon — Property intelligence, built for better acquisitions.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F5F8FA;
+    --surface: #FFFFFF;
+    --ink: #12202E;
+    --muted: #58697A;
+    --line: #D7E1E8;
+    --signal: #2F5BFF;
+    --signal-ink: #FFFFFF;
+    --mint: #2FD1A6;
+    --house-line: #29415A;
+    --house-line-soft: rgba(41,65,90,0.28);
+    --grid-line: rgba(41,65,90,0.07);
+  }
+ 
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x:hidden;
+  }
+ 
+  /* ambient backdrop */
+  .field{
+    position:relative;
+    min-height:100vh;
+    overflow:hidden;
+    background:
+      radial-gradient(60% 50% at 78% 18%, rgba(47,209,166,0.10), transparent 60%),
+      radial-gradient(70% 60% at 20% 85%, rgba(47,91,255,0.07), transparent 60%),
+      var(--bg);
+  }
+ 
+  .grid-floor{
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: linear-gradient(to bottom, transparent, black 12%, black 75%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 75%, transparent 100%);
+    pointer-events:none;
+  }
+ 
+  /* nav */
+  nav{
+    position:relative;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    max-width:1280px;
+    margin:0 auto;
+    padding: 28px 40px 0;
+  }
+  .wordmark{
+    font-family:'Space Groteske','Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:20px;
+    letter-spacing:-0.01em;
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .wordmark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 4px rgba(47,91,255,0.14);
+  }
+  .navlinks{
+    display:flex;
+    align-items:center;
+    gap:36px;
+    font-size:14px;
+    color: var(--muted);
+  }
+  .navlinks a{ color:inherit; text-decoration:none; }
+  .navlinks a:hover{ color:var(--ink); }
+  .navlinks .cta-ghost{
+    border:1px solid var(--line);
+    padding:9px 16px;
+    border-radius:999px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.6);
+  }
+ 
+  /* hero */
+  .hero{
+    position:relative;
+    z-index:2;
+    max-width:1280px;
+    margin:0 auto;
+    padding: 96px 40px 140px;
+    display:grid;
+    grid-template-columns: minmax(0,620px) 1fr;
+    align-items:center;
+    min-height: 78vh;
+  }
+ 
+  .copy{ position:relative; z-index:3; }
+ 
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color: var(--signal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 26px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background: var(--signal);
+    display:inline-block;
+  }
+ 
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size: clamp(38px, 4.6vw, 60px);
+    line-height:1.06;
+    letter-spacing:-0.02em;
+    margin:0 0 26px;
+    max-width:11.5ch;
+  }
+ 
+  p.lede{
+    font-size:17px;
+    line-height:1.65;
+    color: var(--muted);
+    max-width:46ch;
+    margin:0 0 42px;
+  }
+ 
+  .actions{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+ 
+  .btn-primary{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    color: var(--signal-ink);
+    background: var(--ink);
+    border:none;
+    padding:15px 26px;
+    border-radius:10px;
+    cursor:pointer;
+    letter-spacing:-0.01em;
+    box-shadow: 0 1px 2px rgba(18,32,46,0.06);
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn-primary:hover{ background: var(--signal); transform: translateY(-1px); }
+ 
+  .btn-secondary{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.01em;
+    color: var(--ink);
+    background:none;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .btn-secondary:hover{ border-color: var(--ink); }
+  .btn-secondary svg{ transition: transform .15s ease; }
+  .btn-secondary:hover svg{ transform: translateX(3px); }
+ 
+  /* 3D house */
+  .stage{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-end;
+    padding-right: 3vw;
+    padding-top: 2vh;
+    perspective: 1800px;
+  }
+ 
+  .rig{
+    width: 460px;
+    height: 460px;
+    position:relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-16deg);
+  }
+ 
+  .house{
+    position:absolute;
+    top:50%; left:50%;
+    width:0; height:0;
+    transform-style: preserve-3d;
+    animation: spin 26s linear infinite;
+  }
+  @keyframes spin{
+    from{ transform: rotateY(0deg); }
+    to{ transform: rotateY(360deg); }
+  }
+ 
+  .face{
+    position:absolute;
+    top:0; left:0;
+    border: 1.4px solid var(--house-line-soft);
+    background: rgba(41,65,90,0.025);
+  }
+  .face.crisp{ border-color: var(--house-line); }
+ 
+  /* wall dimensions */
+  .wall{ width:220px; height:150px; margin:-75px 0 0 -110px; }
+  .wall.front{ transform: translateZ(110px); }
+  .wall.back{ transform: rotateY(180deg) translateZ(110px); }
+  .wall.left{ width:220px; margin:-75px 0 0 -110px; transform: rotateY(-90deg) translateZ(110px); }
+  .wall.right{ width:220px; margin:-75px 0 0 -110px; transform: rotateY(90deg) translateZ(110px); }
+ 
+  .door{
+    width:54px; height:88px;
+    margin:-1px 0 0 -27px;
+    top: 75px; left:0;
+    transform: translateZ(111px);
+    border: 1.4px solid var(--house-line-soft);
+    background:none;
+  }
+  .window{
+    width:42px; height:42px;
+    top:-38px;
+    border: 1.4px solid var(--house-line-soft);
+    background:none;
+  }
+  .window.w1{ margin-left:-95px; transform: translateZ(111px); }
+  .window.w2{ margin-left:53px; transform: translateZ(111px); }
+ 
+  /* roof — two gable slopes */
+  .roof-front{
+    width:220px; height:156px; margin:-78px 0 0 -110px;
+    transform: translateY(-75px) rotateX(45deg) translateY(-77.8px) translateZ(77.8px);
+  }
+  .roof-back{
+    width:220px; height:156px; margin:-78px 0 0 -110px;
+    transform: translateY(-75px) rotateX(-45deg) translateY(-77.8px) translateZ(-77.8px);
+  }
+ 
+  .gable{ width:220px; height:80px; margin:-114px 0 0 -110px; }
+  .gable.left{ transform: rotateY(-90deg) translateZ(110px); }
+  .gable.right{ transform: rotateY(90deg) translateZ(110px); }
+  .gable svg{ width:100%; height:100%; display:block; }
+ 
+  .ground-ring{
+    position:absolute;
+    width:520px; height:520px;
+    border-radius:50%;
+    border:1px solid rgba(41,65,90,0.1);
+    top:50%; left:50%;
+    transform: translate(-50%,-50%) rotateX(78deg);
+  }
+  .ground-ring.r2{ width:640px; height:640px; border-color: rgba(41,65,90,0.06); }
+ 
+  .glow{
+    position:absolute;
+    width:520px; height:520px;
+    top:50%; left:50%;
+    transform: translate(-50%,-58%);
+    background: radial-gradient(circle, rgba(47,209,166,0.16), transparent 65%);
+    filter: blur(10px);
+    pointer-events:none;
+  }
+ 
+  /* footer strip for context */
+  .basefooter{
+    position:relative; z-index:4;
+    max-width:1280px; margin:0 auto;
+    padding: 0 40px 48px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    color: var(--muted);
+    text-transform:uppercase;
+  }
+  .basefooter .tags{ display:flex; gap:28px; }
+ 
+  @media (max-width: 880px){
+    .hero{ grid-template-columns:1fr; padding-top:56px; }
+    .stage{ position:relative; justify-content:center; height:360px; margin-top:20px; padding-right:0; order:2;}
+    .navlinks a:not(.cta-ghost){ display:none; }
+    .basefooter{ flex-direction:column; align-items:flex-start; gap:10px; }
+  }
+ 
+  @media (prefers-reduced-motion: reduce){
+    .house{ animation:none; transform: rotateY(-28deg); }
+  }
+</style>
+</head>
+<body>
+ 
+<div class="field">
+  <div class="grid-floor"></div>
+ 
+  <nav>
+    <div class="wordmark"><span class="dot"></span>Halcyon</div>
+    <div class="navlinks">
+      <a href="#">Approach</a>
+      <a href="#">Coverage</a>
+      <a href="#">Case studies</a>
+      <a href="#" class="cta-ghost">Book a call</a>
+    </div>
+  </nav>
+ 
+  <div class="hero">
+ 
+    <div class="stage">
+      <div class="glow"></div>
+      <div class="ground-ring r2"></div>
+      <div class="ground-ring"></div>
+      <div class="rig">
+        <div class="house">
+          <div class="face wall front"></div>
+          <div class="face wall back"></div>
+          <div class="face wall left"></div>
+          <div class="face wall right"></div>
+ 
+          <div class="face door"></div>
+          <div class="face window w1"></div>
+          <div class="face window w2"></div>
+ 
+          <div class="face roof-front crisp"></div>
+          <div class="face roof-back crisp"></div>
+ 
+          <div class="gable left">
+            <svg viewBox="0 0 220 80"><polygon points="110,0 0,80 220,80" fill="none" stroke="#29415A" stroke-width="1.6" stroke-opacity="0.32"/></svg>
+          </div>
+          <div class="gable right">
+            <svg viewBox="0 0 220 80"><polygon points="110,0 0,80 220,80" fill="none" stroke="#29415A" stroke-width="1.6" stroke-opacity="0.32"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="copy">
+      <p class="eyebrow">AI-assisted UK property sourcing</p>
+      <h1>Property intelligence, built for better acquisitions.</h1>
+      <p class="lede">We combine UK property records, limited company ownership research and civic data with AI-assisted analysis — then verify every lead by hand — to find, assess and deliver acquisitions worth acting on.</p>
+      <div class="actions">
+        <button class="btn-primary">Discuss an investment</button>
+        <button class="btn-secondary">How sourcing works
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+      </div>
+    </div>
+ 
+  </div>
+ 
+  <div class="basefooter">
+    <span>Land registry · Companies House · Civic planning data</span>
+    <div class="tags">
+      <span>Est. leads reviewed by hand</span>
+      <span>England &amp; Wales</span>
+    </div>
+  </div>
+</div>
+ 
+</body>
+</html>
+ 
