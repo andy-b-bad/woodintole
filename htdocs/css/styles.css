@@ -484,53 +484,6 @@ a.link {
   .morph-word__item--acquisition { opacity: 1; filter: none; transform: none; }
   .morph-word__item--artificial { opacity: 0; }
 }
-.morph-heading--phrase {
-  font-size: clamp(2.35rem, 1.7rem + 3vw, 4.25rem);
-}
-.morph-phrase {
-  display: grid;
-}
-.morph-phrase__item {
-  grid-area: 1 / 1;
-  white-space: nowrap;
-  will-change: opacity, filter, transform;
-}
-.morph-phrase__item--acquisition {
-  animation: morphPhraseAcquisition 9s ease-in-out infinite;
-}
-.morph-phrase__item--ai {
-  opacity: 0;
-  animation: morphPhraseAi 9s ease-in-out infinite;
-}
-@keyframes morphPhraseAcquisition {
-  0%, 36%, 100% {
-    opacity: 1;
-    filter: blur(0);
-    transform: scale(1);
-  }
-  47%, 87% {
-    opacity: 0;
-    filter: blur(10px);
-    transform: scale(1.025);
-  }
-}
-@keyframes morphPhraseAi {
-  0%, 36%, 100% {
-    opacity: 0;
-    filter: blur(10px);
-    transform: scale(0.975);
-  }
-  47%, 87% {
-    opacity: 1;
-    filter: blur(0);
-    transform: scale(1);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .morph-phrase__item { animation: none; }
-  .morph-phrase__item--acquisition { opacity: 1; filter: none; transform: none; }
-  .morph-phrase__item--ai { opacity: 0; }
-}
 .hero .hero-tagline { color: var(--teal); }
 .hero .lede { margin-top: 1.4rem; font-size: var(--step-1); max-width: 42ch; color: #d8d6d0; }
 .hero-ctas { margin-top: 2.2rem; }
